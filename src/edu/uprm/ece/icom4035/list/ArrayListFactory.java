@@ -1,12 +1,9 @@
 package edu.uprm.ece.icom4035.list;
 
-import edu.uprm.ece.icom4035.polynomial.Term;
-
-public class ArrayListFactory<T> implements ListFactory<Term> {
+public class ArrayListFactory<E> implements ListFactory<E> {
 
 	@Override
-	public List<Term> newInstance() {
-		// TODO Auto-generated method stub
+	public List<E> newInstance() {
 		return null;
 	}
 

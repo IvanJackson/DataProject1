@@ -1,23 +1,35 @@
 package edu.uprm.ece.icom4035.polynomial;
 
 public class TermImp implements Term{
-
+	
+	double coefficient;
+	int exponent;
+	
+	public TermImp() {
+		coefficient=0.0;
+		exponent=0;
+	}
+	
 	@Override
 	public double getCoefficient() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.coefficient;
 	}
 
 	@Override
 	public int getExponent() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.exponent;
 	}
 
 	@Override
 	public double evaluate(double x) {
-		// TODO Auto-generated method stub
-		return 0;
+		return Math.pow(x, this.getExponent())*this.getCoefficient();
+	}
+	
+	public void setCoefficient(double coefficient) {
+		this.coefficient = coefficient;
+	}
+	public void setExponent(int exponent) {
+		this.exponent = exponent;
 	}
 
 }
