@@ -7,8 +7,6 @@ public class SingleLinkedList<E> implements List<E>{
 	private int length;
 	private Node<E> DH, current;
 	
-
-	
 	public SingleLinkedList() {
 		DH = new Node<E>();
 		current = new Node<E>();
@@ -37,30 +35,53 @@ public class SingleLinkedList<E> implements List<E>{
 	}
 
 	@Override
-	public void add(int index, E obj) {
-		if(index==0) {
-			this.add(obj);
-		}
-		else {
-			
-			}
-		}
+	public void add(int index, E obj) {}
 
 	@Override
 	public boolean remove(E obj) {
-		// TODO Auto-generated method stub
+		/**Iterator<E> iter = this.iterator();
+		current =(Node<E>) iter.next();
+		
+		if(current.getElement()==obj) {
+			DH.setNext(current.getNext());
+			return true;
+		}
+		
+		while(iter.hasNext()) {
+			if(current.getNext().getElement()==obj) {
+				current.getNext().setElement(null);
+				current.setNext(current.getNext().getNext());
+				return true;	
+			}
+			current=(Node<E>) iter.next();	
+		}**/
 		return false;
 	}
 
 	@Override
-	public boolean remove(int index) {
-		// TODO Auto-generated method stub
+	public boolean remove(int index) throws IndexOutOfBoundsException{
+		/**Iterator<E> iter = this.iterator();
+		current =(Node<E>) iter.next();
+		Node<E> prev = current;
+		if(index<0||index>this.size()) throw new IndexOutOfBoundsException("Index is bigger than the size of the List.");
+		if(index==0) {
+			DH.setNext(current.getNext());
+			iter.remove();
+			return true;
+		}
+		int counter = 0;
+		while(iter.hasNext()) {
+			if(counter==index) {
+				iter.remove();
+				return true;
+			}
+			
+		}**/
 		return false;
 	}
 
 	@Override
 	public int removeAll(E obj) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

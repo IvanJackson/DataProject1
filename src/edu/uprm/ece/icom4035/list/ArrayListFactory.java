@@ -4,7 +4,7 @@ public class ArrayListFactory<E> implements ListFactory<E> {
 
 	@Override
 	public List<E> newInstance() {
-		return null;
+		return new ArrayList<E>();
 	}
 
 }
