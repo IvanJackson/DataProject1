@@ -24,7 +24,16 @@ public class ArrayList<E> implements List<E>{
 	@Override
 	public void add(E obj) {
 		if(this.size()==this.arr.length) this.changeCapacity(this.size()*2);
-		this.arr[this.size()+1]=obj;
+		this.arr[this.size()]=obj;
+		this.size++;
+//		if(this.size()<this.arr.length) {
+//			E[] temp = (E[]) new Object[this.size()];
+//			for(int i =0;i<this.size();i++) {
+//				temp[i]=arr[i];
+//			}
+//			arr=temp;
+//		}
+
 	}
 
 	@Override
@@ -37,25 +46,57 @@ public class ArrayList<E> implements List<E>{
 		}
 		this.arr[index]=obj;
 		this.size++;
-		
+//		if(this.size()<this.arr.length) {
+//			E[] temp = (E[]) new Object[this.size()];
+//			for(int i =0;i<this.size();i++) {
+//				temp[i]=arr[i];
+//			}
+//			arr=temp;
+//		}
 	}
 
 	@Override
 	public boolean remove(E obj) {
-		// TODO Auto-generated method stub
+		if(this.size()==0) return false;
+		for(int i =0;i<this.size();i++) {
+			if(this.arr[i]==obj) {
+				for(int j=i;j<this.size()-1;j++) {
+					this.arr[j]=this.arr[j+1];
+				}
+				this.arr[this.size-1]=null;
+				this.size--;
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean remove(int index) {
-		// TODO Auto-generated method stub
-		return false;
+		if (index < 0 || index >= this.size()) return false;
+		for (int i=index; i < this.size() - 1;++i) {
+			this.arr[i] = this.arr[i+1];
+		}
+		this.arr[this.size()-1] = null;
+		this.size--;
+		return true;
 	}
 
 	@Override
 	public int removeAll(E obj) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(this.size()==0) return 0;
+		int counter=0;
+		for(int i =0;i<this.size();i++) {
+			if(this.arr[i]==obj) {
+				for(int j=i;j<this.size()-1;j++) {
+					this.arr[j]=this.arr[j+1];
+				}
+				this.arr[this.size-1]=null;
+				this.size--;
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	@Override

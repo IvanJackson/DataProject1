@@ -9,6 +9,10 @@ public class TermImp implements Term{
 		coefficient=0.0;
 		exponent=0;
 	}
+	public TermImp(double coefficient, int exponent) {
+		this.coefficient=coefficient;
+		this.exponent=exponent;  
+	}
 	
 	@Override
 	public double getCoefficient() {
@@ -31,5 +35,9 @@ public class TermImp implements Term{
 	public void setExponent(int exponent) {
 		this.exponent = exponent;
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		if(((TermImp) obj).getCoefficient()==this.getCoefficient() && this.getExponent()==((TermImp) obj).getExponent()) return true;
+		return false;
+	}
 }

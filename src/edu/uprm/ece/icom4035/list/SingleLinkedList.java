@@ -24,65 +24,118 @@ public class SingleLinkedList<E> implements List<E>{
 		if(this.length==0) {
 			Node<E> newNode = new Node<E>(obj,null);
 			DH.setNext(newNode);
+			current = newNode;
+			length++;
 		}
 		else {
 			Iterator<E> iter = this.iterator();
-			while(iter.hasNext()) current = (Node<E>) iter.next();
+//			current = (Node<E>) iter.next();
+			current = DH.getNext();
+			while(current.getNext()!=null) {
+				current=current.getNext();
+			}
 			current.setNext(new Node<E>(obj, null));
-			length++;
+//			while(iter.hasNext()) current = (Node<E>) iter.next();
+//			current.setNext(new Node<E>(obj, null));
+//			length++;
 			
 		} 
 	}
 
 	@Override
-	public void add(int index, E obj) {}
+	public void add(int index, E obj) throws IndexOutOfBoundsException{
+		if(index<0 || index>this.size()) throw new IndexOutOfBoundsException("Index is bigger than the size of the List.");
+		if(index==0) {
+			DH.setNext(new Node<E>(obj,null));
+		}
+		int counter =1;
+		Node<E> newNode = new Node<E>(obj,null);
+		Iterator<E> iter = this.iterator();
+		current = (Node<E>) iter.next();
+		Node<E> prev = DH;
+		while(iter.hasNext()) {
+			if(counter==index) {
+				prev.setNext(newNode);
+				newNode.setNext(current.getNext());
+			}
+			prev=current;
+			current = (Node<E>) iter.next();
+			counter++;
+		}
+		this.length++;
+	}
 
 	@Override
 	public boolean remove(E obj) {
-		/**Iterator<E> iter = this.iterator();
-		current =(Node<E>) iter.next();
-		
+		Iterator<E> iter = this.iterator();
+		Node<E> prev = DH;
+		if(this.length==0) return false;
+		current = (Node<E>) iter.next();
+		while(iter.hasNext()) {
+			if(current.getElement()==obj) {
+				prev.setNext(current.getNext());
+				this.length--;
+				return true;
+			}
+			prev = current;
+			current = (Node<E>) iter.next();
+		}
 		if(current.getElement()==obj) {
-			DH.setNext(current.getNext());
+			prev.setNext(current.getNext());
+			this.length--;
 			return true;
 		}
-		
-		while(iter.hasNext()) {
-			if(current.getNext().getElement()==obj) {
-				current.getNext().setElement(null);
-				current.setNext(current.getNext().getNext());
-				return true;	
-			}
-			current=(Node<E>) iter.next();	
-		}**/
 		return false;
 	}
 
 	@Override
 	public boolean remove(int index) throws IndexOutOfBoundsException{
-		/**Iterator<E> iter = this.iterator();
+		Iterator<E> iter = this.iterator();
 		current =(Node<E>) iter.next();
 		Node<E> prev = current;
-		if(index<0||index>this.size()) throw new IndexOutOfBoundsException("Index is bigger than the size of the List.");
+		if(index<0||index>this.size()) throw new IndexOutOfBoundsException("This index is not valid");
 		if(index==0) {
 			DH.setNext(current.getNext());
 			iter.remove();
+			this.length--;
 			return true;
 		}
 		int counter = 0;
 		while(iter.hasNext()) {
 			if(counter==index) {
+				prev.setNext(current.getNext());
 				iter.remove();
+				this.length--;
 				return true;
 			}
-			
-		}**/
+			prev=current;
+			current=(Node<E>) iter.next();
+		}
 		return false;
 	}
 
 	@Override
 	public int removeAll(E obj) {
-		return 0;
+		Iterator<E> iter = this.iterator();
+		Node<E> prev = DH;
+		if(this.length==0) return 0;
+		current = (Node<E>) iter.next();
+		int counter =0;
+		while(iter.hasNext()) {
+			if(current.getElement()==obj) {
+				prev.setNext(current.getNext());
+				this.length--;
+				counter++;
+			}
+			prev = current;
+			current = (Node<E>) iter.next();
+		}
+		if(current.getElement()==obj) {
+			prev.setNext(current.getNext());
+			this.length--;
+			counter++;
+		}
+		return counter;
 	}
 
 	@Override
