@@ -147,6 +147,8 @@ public class PolynomialImp implements Polynomial{
 		return joined;
 	}
 
+	//substracts the parameter polynomial from the target polynomial 
+	//and returns the first polynomial, modified
 	@Override
 	public Polynomial subtract(Polynomial P2) {
 		if(this.equals(P2)) return new PolynomialImp("0");
@@ -160,8 +162,9 @@ public class PolynomialImp implements Polynomial{
 		PolynomialImp newPoly = new PolynomialImp();
 		PolynomialImp newPoly2 = new PolynomialImp();
 		for(Term term1: this.getPolyList()) {
+			//this for loop iterates through every term of both polynomials and adds the product of each of the pair of terms on a new polynomials
 			for(Term term2: ((PolynomialImp)P2).getPolyList()) {
-				newPoly.getPolyList().add(new TermImp(term1.getCoefficient()*term2.getCoefficient(), term1.getExponent()+term2.getExponent()));
+				newPoly.getPolyList().add(new TermImp(term1.getCoefficient()*term2.getCoefficient(), term1.getExponent()+term2.getExponent())); 
 			}
 		}
 		int maxExp = newPoly.degree();
@@ -176,7 +179,7 @@ public class PolynomialImp implements Polynomial{
 		}
 		return newPoly2;
 	}
-
+	// multiplies a polynomials, and returns it, after each term in it has been multiplied by the parameter
 	@Override
 	public Polynomial multiply(double c) {
 		if(c==0) return new PolynomialImp("0");
@@ -189,18 +192,12 @@ public class PolynomialImp implements Polynomial{
 
 	@Override
 	public Polynomial derivative() {
-		Iterator<Term> iter = this.iterator();
-		Term current = iter.next();
 		String termInString="";
-		while(iter.hasNext()) {
-			if(current.getExponent()==0) {
-				((TermImp)current).setCoefficient(0);
-				current = iter.next();
-			}
-			((TermImp)current).setCoefficient(current.getCoefficient()*current.getExponent());
-			((TermImp)current).setExponent(current.getExponent()-1);
-			termInString = join(termInString,current.getCoefficient()+"x^"+current.getExponent());
-			current = iter.next();
+		for(Term term : this.getPolyList()){
+			if(term.getExponent()==0) ((TermImp)term).setCoefficient(0);
+			((TermImp)term).setCoefficient(term.getCoefficient()*term.getExponent());
+			((TermImp)term).setExponent(term.getExponent()-1);
+			termInString = join(termInString,term.getCoefficient()+"x^"+term.getExponent());
 		}
 		return new PolynomialImp(termInString);
 	}
@@ -265,6 +262,7 @@ public class PolynomialImp implements Polynomial{
 		}
 		return true;
 	}
+	
 	private int numOfTerms(String poly){
 		if(poly.isEmpty()) return 0;
 		else {
@@ -275,6 +273,7 @@ public class PolynomialImp implements Polynomial{
 			return counter+1;
 		}
 	}
+	
 	private TermImp[] PolyStringToPolyList(int numOfTerms, String poly, TermImp[] arr, int place) {
 		TermImp terms = new TermImp();
 		String termInString;
