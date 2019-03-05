@@ -3,12 +3,11 @@ package edu.uprm.ece.icom4035.list;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
 public class ListForwardIterator<E> implements Iterator<E> {
 	private List<E> list;
 	private int currentPosition;
 	private boolean canRemove;
-	
+
 	public  ListForwardIterator(List<E> list) {
 		this.list = list;
 		this.currentPosition = 0;

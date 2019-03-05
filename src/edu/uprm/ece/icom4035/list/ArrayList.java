@@ -6,7 +6,7 @@ public class ArrayList<E> implements List<E>{
 
 	private E arr[];
 	private int size;
-	
+
 	public ArrayList() {
 		this.arr=(E[]) new Object[5];
 		this.size=0;
@@ -26,14 +26,6 @@ public class ArrayList<E> implements List<E>{
 		if(this.size()==this.arr.length) this.changeCapacity(this.size()*2);
 		this.arr[this.size()]=obj;
 		this.size++;
-//		if(this.size()<this.arr.length) {
-//			E[] temp = (E[]) new Object[this.size()];
-//			for(int i =0;i<this.size();i++) {
-//				temp[i]=arr[i];
-//			}
-//			arr=temp;
-//		}
-
 	}
 
 	@Override
@@ -46,13 +38,6 @@ public class ArrayList<E> implements List<E>{
 		}
 		this.arr[index]=obj;
 		this.size++;
-//		if(this.size()<this.arr.length) {
-//			E[] temp = (E[]) new Object[this.size()];
-//			for(int i =0;i<this.size();i++) {
-//				temp[i]=arr[i];
-//			}
-//			arr=temp;
-//		}
 	}
 
 	@Override

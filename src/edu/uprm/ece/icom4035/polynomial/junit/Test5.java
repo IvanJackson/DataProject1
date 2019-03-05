@@ -10,9 +10,7 @@ import edu.uprm.ece.icom4035.polynomial.PolynomialImp;
 import edu.uprm.ece.icom4035.polynomial.TermListFactory;
 
 public class Test5 {
- 
 	private static final double EPSILON = 0.0001;
-	
 	private Polynomial P1;
 	private Polynomial P2;
 
@@ -31,7 +29,6 @@ public class Test5 {
 		Polynomial P4 = new PolynomialImp("4x^2+2x+3");
 		System.out.printf("Add-> P3: %s, P4: %s\n", P3, P4);
 		assertTrue(P3.equals(P4));
-		
 	}
 
 	@Test
@@ -40,14 +37,10 @@ public class Test5 {
 		Polynomial P4 = new PolynomialImp("2x^2+2x+-1");
 		System.out.printf("Subtract I-> P3: %s, P4: %s\n", P3, P4);
 		assertTrue(P3.equals(P4));
-		
 		P3 = P1.subtract(P1);
 		P4 = new PolynomialImp("0");
 		System.out.printf("Subtract II-> P3: %s, P4: %s\n", P3, P4);
 		assertTrue(P3.equals(P4));
-		
-	
-		
 	}
 
 	@Test

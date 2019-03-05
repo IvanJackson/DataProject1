@@ -6,7 +6,6 @@ import edu.uprm.ece.icom4035.list.SinglyLinkedListFactory;
 
 public class TermListFactory {
 	private static  String factory = "array";
-	
 	public static ListFactory<Term> newListFactory(){
 		// Return a factory for ArrayList
 		if (factory == "array") {

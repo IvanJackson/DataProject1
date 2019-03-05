@@ -1,19 +1,19 @@
 package edu.uprm.ece.icom4035.polynomial;
 
 public class TermImp implements Term{
-	
+
 	double coefficient;
 	int exponent;
-	
+
 	public TermImp() {
 		coefficient=0.0;
 		exponent=0;
 	}
 	public TermImp(double coefficient, int exponent) {
 		this.coefficient=coefficient;
-		this.exponent=exponent;  
+		this.exponent=exponent;
 	}
-	
+
 	@Override
 	public double getCoefficient() {
 		return this.coefficient;
@@ -28,7 +28,7 @@ public class TermImp implements Term{
 	public double evaluate(double x) {
 		return (Math.pow(x, this.getExponent())*this.getCoefficient());
 	}
-	
+
 	public void setCoefficient(double coefficient) {
 		this.coefficient = coefficient;
 	}

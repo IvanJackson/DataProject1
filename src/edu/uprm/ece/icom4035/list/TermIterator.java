@@ -22,7 +22,7 @@ public class TermIterator<Term> implements Iterator<Term> {
 	public Term next() {
 		if(this.hasNext()) {
 			TermImp term = new TermImp();
-			for(int i=0;i<this.string.length();i++) {
+			for(int i=0;i<this.string.length();) {
 				if(string.charAt(i)=='x') {
 					tempC=string.substring(0, i-1);
 				}
@@ -37,25 +37,8 @@ public class TermIterator<Term> implements Iterator<Term> {
 			}
 			term.setCoefficient(Double.parseDouble(tempC));
 			term.setExponent(Integer.parseInt(tempE));
-			return (Term) term;
+			return (Term)term;
 		}
 		throw new NoSuchElementException();
 	}
 }
-//	public Term fake() {
-//		for(int i=0;i<this.string.length();i++) {
-//			if(string.charAt(i)=='x') {
-//				tempC=string.substring(0, i-1);
-//			}
-//			if(string.charAt(i)=='^') {
-//				while(string.charAt(i)!='+'||string.charAt(i)!='-'||string.charAt(i)!='*'||string.charAt(i)!='/') {
-//					i++;
-//					tempE+=string.charAt(i);
-//				}
-//			}
-//		}
-//		coefficient = Double.parseDouble(tempC);
-//		exponent=Integer.parseInt(tempE);
-//	}
-//
-//}

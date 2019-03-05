@@ -2,7 +2,6 @@ package edu.uprm.ece.icom4035.list;
 
 
 public class ParameterCheck {
-	
 	public static void checkGT(int n, int min){
 		if (n < min){
 			throw new IllegalArgumentException("Parameter is too small.");

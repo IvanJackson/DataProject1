@@ -9,9 +9,9 @@ import edu.uprm.ece.icom4035.polynomial.Polynomial;
 import edu.uprm.ece.icom4035.polynomial.PolynomialImp;
 
 public class Test1 {
- 
+
 	private static final double EPSILON = 0.0001;
-	
+
 	private Polynomial P1;
 	private Polynomial P2;
 
@@ -28,7 +28,7 @@ public class Test1 {
 		Polynomial P4 = new PolynomialImp("12x^2+3");
 		System.out.printf("Add-> P3: %s, P4: %s\n", P3, P4);
 		assertTrue(P3.equals(P4));
-		
+
 	}
 
 	@Test

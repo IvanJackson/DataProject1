@@ -8,43 +8,44 @@ import edu.uprm.ece.icom4035.polynomial.TermListFactory;
 
 public class PolynomialImp implements Polynomial{
 	List<Term> PolyList = (List<Term>) TermListFactory.newListFactory().newInstance();
-	private static char operator = '+';
 
 	public PolynomialImp(String string) {
-		int size = this.numOfTerms(string);
-		int place =0;
-		TermImp[] arr= new TermImp[size];
-		arr= this.PolyStringToPolyList(size, string, arr, place);
-		for(int i =0;i<arr.length;i++) {
+		int size = this.numOfTerms(string); //calculates # of terms
+		int place =0;						//used to know where to place the term in the array
+		TermImp[] arr= new TermImp[size];	//creates array to turn the string to a list
+		arr= this.PolyStringToPolyList(size, string, arr, place); //returns the terms separated into indexes of the array
+		for(int i =0;i<arr.length;i++) {	//adds elements of the array to the list
 			PolyList.add(arr[i]);
 		}
-		Iterator<Term> iter = this.iterator();
-		Term current = iter.next();
-		while(iter.hasNext()) {
-			if(current.getCoefficient()==0) iter.remove();
-			current = iter.next();
+		Iterator<Term> iter = this.iterator(); // creates iterator
+		Term current = iter.next();			// current is the first element of the list
+		while(iter.hasNext()) {				// will loop until it reaches last element
+			if(current.getCoefficient()==0) iter.remove(); //if the coefficient of the term is 0, it will remove it from the list
+			current = iter.next();			// continues to loop
 		}
-		if(this.getPolyList().size()!=1) {
+		if(this.getPolyList().size()!=1) {	// makes sure not to remove the only elements of the list
 			if(current.getCoefficient()==0) iter.remove();
 		}
 	}
-	public PolynomialImp() {
-		
-	}
+	public PolynomialImp() {}
 
 	@Override
-	public Iterator<Term> iterator() {
+	public Iterator<Term> iterator() {	// generates list iterator
 		return new ListForwardIterator<Term>(this.PolyList);
 	}
 
-	public List<Term> getPolyList() {
+	public List<Term> getPolyList() {	// returns list
 		return this.PolyList;
 	}
 
-	public void setPolyList(List<Term> polyList) {
+	public void setPolyList(List<Term> polyList) {	//assigns the target list to a different one
 		PolyList = polyList;
 	}
 
+	/*
+		Adds the target polynomial with the parameter polynomial and returns a new Polynomial
+		with finalPoly, an empty string that get's filled with terms, as a parameter
+	*/
 	@Override
 	public Polynomial add(Polynomial P2) {
 		String finalPoly ="";
@@ -72,11 +73,8 @@ public class PolynomialImp implements Polynomial{
 				term2 = iter2.next();
 			}
 		}
-//		if(!(iter1.hasNext()&&iter2.hasNext())){
-		
 		while(iter1.hasNext()) {
 			if(term1.getExponent()>term2.getExponent()) {
-//				finalPoly+=term1+"+";
 				finalPoly = join(finalPoly, term1.getCoefficient()+"x^"+term1.getExponent());
 				term1=iter1.next();
 			} else if(term1.getCoefficient()<term2.getExponent()) {
@@ -141,6 +139,7 @@ public class PolynomialImp implements Polynomial{
 		Polynomial PolyToReturn = new PolynomialImp(finalPoly);
 		return PolyToReturn;
 	}
+	//private helper method to help join strings of polynomials
 	private static String join(String poly1, String poly2) {
 		String joined ="";
 		if(poly1.length()==0) joined = poly2;
@@ -165,10 +164,7 @@ public class PolynomialImp implements Polynomial{
 				newPoly.getPolyList().add(new TermImp(term1.getCoefficient()*term2.getCoefficient(), term1.getExponent()+term2.getExponent()));
 			}
 		}
-		int maxExp =0;
-		for(Term term3: newPoly.getPolyList()) {
-			if(term3.getExponent()>maxExp) maxExp = term3.getExponent();
-		}
+		int maxExp = newPoly.degree();
 		for(int i=maxExp; i>=0;i--) {
 			Term temp = new TermImp(0, i);
 			for(Term term4: newPoly.getPolyList()) {
@@ -178,7 +174,6 @@ public class PolynomialImp implements Polynomial{
 			}
 			if(temp.getCoefficient()!=0) newPoly2.getPolyList().add(temp);
 		}
-		
 		return newPoly2;
 	}
 
@@ -240,26 +235,15 @@ public class PolynomialImp implements Polynomial{
 	@Override
 	public double definiteIntegral(double a, double b) {
 		Polynomial tp = this.indefiniteIntegral();
-		
-		double firstEval = tp.evaluate(a);
-		double secondEval = tp.evaluate(b);
-		double dtr = secondEval - firstEval;
-//		return dtr;
 		return tp.evaluate(b)-tp.evaluate(a);
 	}
 
 	@Override
 	public int degree() {
 		int degree=0;
-		Term current = new TermImp();
-		Iterator<Term> iter = this.iterator();
-		current = iter.next();
-		degree = current.getExponent();
-		while(iter.hasNext()) {
-			current = iter.next();
-			if(degree<current.getExponent()) degree = current.getExponent();
+		for(Term term : this.getPolyList()){
+			if(degree<term.getExponent()) degree=term.getExponent();
 		}
-		if(degree<current.getExponent()) degree = current.getExponent();
 		return degree;
 	}
 
@@ -271,7 +255,6 @@ public class PolynomialImp implements Polynomial{
 		}
 		return result;
 	}
-	
 
 	@Override
 	public boolean equals(Polynomial P) {
@@ -282,19 +265,16 @@ public class PolynomialImp implements Polynomial{
 		}
 		return true;
 	}
-	
-	
 	private int numOfTerms(String poly){
 		if(poly.isEmpty()) return 0;
 		else {
 			int counter =0;
 			for(int i =0;i<poly.length();i++) {
-				if(poly.charAt(i)==operator) counter++;
+				if(poly.charAt(i)=='+') counter++;
 			}
 			return counter+1;
 		}
 	}
-	
 	private TermImp[] PolyStringToPolyList(int numOfTerms, String poly, TermImp[] arr, int place) {
 		TermImp terms = new TermImp();
 		String termInString;
@@ -305,7 +285,7 @@ public class PolynomialImp implements Polynomial{
 		if(poly.contains("x")) poly=poly+"+";
 		if(numOfTerms==0) return arr;
 		if(poly.contains("x")) {
-				EoT = poly.indexOf(operator);
+				EoT = poly.indexOf('+');
 				termInString = poly.substring(BoT, EoT);
 				if(termInString.indexOf('x')!=0) {
 					for(int j=0;j<termInString.indexOf('x');j++) {
@@ -317,9 +297,6 @@ public class PolynomialImp implements Polynomial{
 						}
 					}
 					else exponent+=1;
-//					if(termInString.contains("/")) {
-//						if(termInString.lastIndexOf('/')==termInString.in
-//					}
 				}
 				else {
 					coefficient+=1;
@@ -351,49 +328,12 @@ public class PolynomialImp implements Polynomial{
 			terms.setCoefficient(Double.parseDouble(poly));
 			terms.setExponent(0);
 		}
-		
 		arr[place]=terms;
 		place++;
 		if(numOfTerms==1) return arr;
 		return this.PolyStringToPolyList(--numOfTerms, poly.substring(EoT+1, poly.length()-1), arr, place);
 	}
-	
-//	@Override
-//	public String toString() {
-//		Iterator<Term> iter = this.iterator();
-//		Term current = iter.next();
-//		String result="";
-//		while(iter.hasNext()) {
-//			result = join(result, ((TermImp)current).getCoefficient()+"x^"+current.getExponent());
-//			current = iter.next();
-//		}
-//		result = join(result, ((TermImp)current).getCoefficient()+"x^"+current.getExponent());
-//		current = iter.next();
-//		return result;
-//	}
-//	public String toString() {
-//		Iterator<Term> iter = this.iterator();
-//		if(this.getPolyList().size()==0) return "";
-//		Term current = iter.next();
-//		String result ="";
-//		while(iter.hasNext()) {
-//			result +=current.toString()+"+";
-//			current = iter.next();
-//		}
-//		result +=current;
-//		return result;
-//	}
-//	@Override
-//	public String toString() {
-//		String result ="";
-//		for(Term term : this.getPolyList()) {
-//			result += term.toString()+"+";
-//		}
-//		if(result.length()>0) {
-//			return result.substring(0, result.length()-1);
-//		}
-//		else return "0.00";
-//	}
+
 	public String toString() {
 		String poly="";
 		for(Term term: this.getPolyList()) {
@@ -403,5 +343,4 @@ public class PolynomialImp implements Polynomial{
 		}
 		return poly.substring(0, poly.length()-1);
 	}
-	
 }
