@@ -81,6 +81,7 @@ public interface Polynomial extends Iterable<Term> {
 	 */
 	boolean equals(Polynomial P);
 	
+	public String toString();
 
 	
 

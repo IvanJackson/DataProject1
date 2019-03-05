@@ -35,9 +35,7 @@ public class SingleLinkedList<E> implements List<E>{
 				current=current.getNext();
 			}
 			current.setNext(new Node<E>(obj, null));
-//			while(iter.hasNext()) current = (Node<E>) iter.next();
-//			current.setNext(new Node<E>(obj, null));
-//			length++;
+			length++;
 			
 		} 
 	}
@@ -90,28 +88,56 @@ public class SingleLinkedList<E> implements List<E>{
 
 	@Override
 	public boolean remove(int index) throws IndexOutOfBoundsException{
-		Iterator<E> iter = this.iterator();
-		current =(Node<E>) iter.next();
-		Node<E> prev = current;
+//		Iterator<E> iter = this.iterator();
+//		current =(Node<E>) iter.next();
+//		Node<E> prev = current;
+//		if(index<0||index>this.size()) throw new IndexOutOfBoundsException("This index is not valid");
+//		if(index==0) {
+//			DH.setNext(current.getNext());
+//			iter.remove();
+//			this.length--;
+//			return true;
+//		}
+//		int counter = 0;
+//		while(iter.hasNext()) {
+//			if(counter==index) {
+//				prev.setNext(current.getNext());
+//				iter.remove();
+//				this.length--;
+//				return true;
+//			}
+//			prev=current;
+//			current=(Node<E>) iter.next();
+//		}
+//		return false;
+		if (this.isEmpty()) {
+			return false;
+		}
 		if(index<0||index>this.size()) throw new IndexOutOfBoundsException("This index is not valid");
-		if(index==0) {
-			DH.setNext(current.getNext());
-			iter.remove();
+		if (index == 0) {
+			Node<E> temp = this.DH;
+			E result = temp.getElement();
+			this.DH = this.DH.getNext();
+			temp.setNext(null);
+			temp.setElement(null);
 			this.length--;
 			return true;
 		}
-		int counter = 0;
-		while(iter.hasNext()) {
-			if(counter==index) {
-				prev.setNext(current.getNext());
-				iter.remove();
-				this.length--;
-				return true;
+		else {
+			Node<E> temp1=this.DH;
+			int counter =0;
+			for(int i=0;i<index;i++) {
+				temp1=temp1.getNext();
+				counter++;
 			}
-			prev=current;
-			current=(Node<E>) iter.next();
+			Node<E> temp2 = temp1.getNext();
+			E result = temp2.getElement();
+			temp1.setNext(temp2.getNext());
+			temp2.setNext(null);
+			temp2.setElement(null);
+			this.length--;
+			return true;
 		}
-		return false;
 	}
 
 	@Override
